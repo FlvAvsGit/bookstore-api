@@ -1,5 +1,6 @@
 package com.udemy.bookstore.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,4 +20,11 @@ public class CategoriaService {
 		
 		return objeto.orElse(null);
 	}
+	public List<Categoria> findTudo() {
+//		List<Categoria> catAll = categoriaRepositorio.findAll();
+//		return catAll;
+//      ou return o comando abaixo
+		return categoriaRepositorio.findAll();
+	}
+	
 }
