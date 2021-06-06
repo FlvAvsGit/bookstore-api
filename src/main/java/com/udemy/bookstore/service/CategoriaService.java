@@ -34,6 +34,10 @@ public class CategoriaService {
 		return categoriaRepositorio.save(obj);
 		
 	}
+	public Categoria create(Categoria obj) {
+		obj.setId(null);
+		return categoriaRepositorio.save(obj);
+	}
 	
 	
 }
