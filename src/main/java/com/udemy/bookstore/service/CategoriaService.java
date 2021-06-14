@@ -18,7 +18,7 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepositorio;
 
-	public Categoria metodoFindService(Integer id) {
+	public Categoria findCategoriaService(Integer id) {
 		Optional<Categoria> objeto = categoriaRepositorio.findById(id);
 
 		return objeto.orElseThrow(() -> new ObjectNotFndException("Objeto não encontrado. Id : " + id + ", Tipo: " + Categoria.class.getName()));
@@ -32,7 +32,7 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Integer id, CategoriaDTO objDto) {
-		Categoria obj = metodoFindService(id);
+		Categoria obj = findCategoriaService(id);
 		obj.setNome(objDto.getNome());
 		return categoriaRepositorio.save(obj);
 

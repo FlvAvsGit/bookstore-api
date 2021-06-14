@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.udemy.bookstore.domain.Livro;
+import com.udemy.bookstore.repository.CategoriaRepository;
 import com.udemy.bookstore.repository.LivroRepository;
+import com.udemy.bookstore.service.exception.ObjectNotFndException;
 
 @Service
 public class LivroService {
@@ -15,15 +17,28 @@ public class LivroService {
 	@Autowired
 	private LivroRepository livroRepositorio;
 	
-	public Livro metodoFindService (Integer Id ) {
-		Optional<Livro> objLivro= livroRepositorio.findById(Id);
+	@Autowired
+	private CategoriaRepository categoriaRepositorio;
+	
+	public Livro metodoFindService (Integer id ) {
+		Optional<Livro> objLivro= livroRepositorio.findById(id);
 		
-		return objLivro.orElse(null);
+		return objLivro.orElseThrow(() -> new ObjectNotFndException("Objeto nçao encontrado. id: " + id + ",Tipo: " + Livro.class.getName()));
 	}
 	
 	public List<Livro> metodoFindAllService () {
 		 List<Livro> objLivro = livroRepositorio.findAll();
 		return objLivro;
 	}
+
+	public List<Livro> livrosPorCat(Integer id_cat) {
+		// Ver se a Categoria existe
+		categoriaRepositorio.findById(id_cat);
+			
+		return livroRepositorio.findLivrosByCategoria(id_cat);
+	}
+
+	
+
 	
 }
