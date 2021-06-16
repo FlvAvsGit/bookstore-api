@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.udemy.bookstore.domain.Categoria;
 import com.udemy.bookstore.domain.Livro;
-import com.udemy.bookstore.repository.CategoriaRepository;
 import com.udemy.bookstore.repository.LivroRepository;
 import com.udemy.bookstore.service.exception.ObjectNotFndException;
 
@@ -18,7 +18,7 @@ public class LivroService {
 	private LivroRepository livroRepositorio;
 	
 	@Autowired
-	private CategoriaRepository categoriaRepositorio;
+	private CategoriaService categoriaService;
 	
 	public Livro metodoFindService (Integer id ) {
 		Optional<Livro> objLivro= livroRepositorio.findById(id);
@@ -33,12 +33,14 @@ public class LivroService {
 
 	public List<Livro> livrosPorCat(Integer id_cat) {
 		// Ver se a Categoria existe
-		categoriaRepositorio.findById(id_cat);
+		categoriaService.findCategoriaService(id_cat);
 		return livroRepositorio.findLivrosByCategoria(id_cat);
 	}
 
-	public Livro create(Livro livroObj) {
+	public Livro create(Integer id_cat, Livro livroObj) {
 		livroObj.setId(null);
+		Categoria cat = categoriaService.findCategoriaService(id_cat);
+		livroObj.setCategoria(cat);
 		return livroRepositorio.save(livroObj);
 
 	}

@@ -67,11 +67,11 @@ public class LivroResource {
 		return ResponseEntity.ok().body(newLivroObj);
 	}
 
-	
 	@PostMapping
-	public ResponseEntity<Livro> create(@RequestBody Livro livroObj) {
-		livroObj = livserv.create(livroObj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(livroObj.getId())
+	public ResponseEntity<Livro> create(@RequestParam(value = "categoria", defaultValue = "0") Integer id_cat,
+			@RequestBody Livro livroObj) {
+		livroObj = livserv.create(id_cat, livroObj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/livros/{id}").buildAndExpand(livroObj.getId())
 				.toUri();
 		return ResponseEntity.created(uri).build();
 	}
