@@ -57,6 +57,12 @@ public class LivroService {
 		livroObjNew.setTitulo(livroObj.getTitulo());
 	}
 
+	public void deleteById(Integer id) {
+		livroRepositorio.deleteById(id);
+		return;
+		
+	}
+
 	
 	
 
